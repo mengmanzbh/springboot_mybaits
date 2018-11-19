@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD demo.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.mapper.UserMapper">
+	<resultMap id="result" type="demo.entity.User">
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+		<result property="email" column="email"/>
+		<result property="realname" column="realname"/>
+ 
+	</resultMap>
+ 
+	<select id="ListUser" resultMap="result">
+		SELECT * FROM user
+	</select>
+ 
+	<select id="findUserByName" resultMap="result">
+		SELECT * FROM user where name=#{name}
+	</select>
+ 
+	<insert id="insertUser" parameterType="demo.entity.User"
+		keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO user
+		(
+		id,name,password,email,realname
+		)
+		VALUES (
+		#{id},
+		#{name, jdbcType=VARCHAR},
+		#{password, jdbcType=VARCHAR},
+		#{email, jdbcType=VARCHAR},
+		#{realname, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from user where id=#{id}
+	</delete>
+	
+	<update id="Update" parameterType="demo.entity.User">
+	update user set user.name=#{name},user.password=#{password},user.email=#{email},user.realname=#{realname} where user.id=#{id}
+	</update>
+</mapper>
